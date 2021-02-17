@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title></title>
+</head>
+
+<body id="main">
+    <div id="wrap">
+
+        <div id="container">
+            <div id="contents">
+
+
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;700&display=swap');
+
+                    .roboto {
+                        font-family: 'Roboto', sans-serif !important;
+                    }
+
+                    #footer_top,
+                    #footer_bottom {
+                        display: none;
+                    }
+
+                    #wrap {
+                        margin-top: 50px;
+                    }
+
+                    @font-face {
+                        font-family: 'NotoSans-Medium';
+                        src: url('./css/module/fullpage/fonts/NotoSansKR-Medium.otf') format('truetype');
+                        font-style: normal;
+                        font-weight: normal;
+                        letter-spacing: -0.69px;
+                    }
+
+                    @font-face {
+                        font-family: 'NotoSans-Regular';
+                        src: url('./css/module/fullpage/fonts/NotoSansKR-Regular.otf') format('truetype');
+                        font-style: normal;
+                        font-weight: normal;
+                        letter-spacing: -0.69px;
+                    }
+
+                    @font-face {
+                        font-family: 'NotoSans-Light';
+                        src: url('./css/module/fullpage/fonts/NotoSansKR-Light.otf') format('truetype');
+                        font-style: normal;
+                        font-weight: normal;
+                        letter-spacing: -0.69px;
+                    }
+
+                    @font-face {
+                        font-family: 'RobotoSlab-Black';
+                        src: url('./css/module/fullpage/fonts/RobotoSlab-Black.ttf') format('truetype');
+                        font-style: normal;
+                        font-weight: normal;
+                    }
+
+
+
+                    #curation-div {
+                        position: absolute;
+                        left: 0;
+                        top: 70px;
+                        width: 100%;
+                        font-family: "NotoSans-Medium";
+                    }
+
+                    #curation-div .regular {
+                        font-family: "NotoSans-Regular" !important;
+                    }
+
+                    #curation-div .light {
+                        font-family: "NotoSans-Light" !important;
+                    }
+
+                    #curation-space {
+                        width: 100%;
+                        min-height: 1000px;
+                    }
+
+                    .curation-step:not(#curation-step-1) {
+                        display: none;
+                    }
+
+                    #button-div {
+                        width: 420px;
+                        height: 50px;
+                        margin: auto;
+                        margin-bottom: 100px;
+                    }
+
+                    #prev-button {
+                        float: left;
+                    }
+
+                    #next-button {
+                        float: right;
+                    }
+
+                    #prev-button,
+                    #next-button,
+                    #progress-bar {
+                        display: none;
+                        /* transition: 0.5s; */
+                    }
+
+                    #next-button,
+                    #prev-button {
+                        color: white;
+                        background: black;
+                        width: 200px;
+                        height: 50px;
+                        border-radius: 0px;
+                        border: 1px solid black;
+                        font-size: 18px;
+                    }
+
+                    #next-button:disabled,
+                    #prev-button:disabled {
+                        color: gray !important;
+                        background: white !important;
+                        border: 1px solid gray !important;
+                    }
+
+                    #progress-bar {
+                        position: relative;
+                        width: 800px;
+                        background: white;
+                        border: 1px solid black;
+                        height: 5px;
+                        margin: auto;
+                        margin-top: 30px;
+                    }
+
+                    #progress-bar #progress {
+                        width: 0%;
+                        background: black;
+                        height: 100%;
+                        transition: 0.5s;
+                    }
+
+                    #progress-bar #progress-status {
+                        color: gray;
+                        font-size: 16px;
+                        margin: 0;
+                        top: -28px;
+                        position: absolute;
+                    }
+
+                    #step-1-background,
+                    #step-7-background {
+                        width: 100vw;
+                        object-fit: cover;
+                        position: absolute;
+                        left: -8px;
+                    }
+
+                    #step-7-background {
+                        width: 100vw;
+                        height: 100vh;
+                        top: -50px;
+                    }
+
+                    #step-1-text-div,
+                    #step-7-text-div {
+                        position: absolute;
+                        color: white;
+                        z-index: 4;
+                        margin-left: auto;
+                        margin-right: auto;
+                        top: 14.5vh;
+                        left: 0;
+                        right: 0;
+                        text-align: center;
+                    }
+
+                    #curation-start-button {
+                        border: 1px solid white;
+                        border-radius: 0;
+                        background: white;
+                        color: black;
+                        height: 72px;
+                        display: block;
+                        margin: auto;
+                        width: 514px;
+                        margin-bottom: 24px;
+                        font-size: 24px;
+                        font-weight: bold;
+                    }
+
+                    #step-1-subscribe-button {
+                        border: 1px solid #8E8E8E;
+                        border-radius: 0;
+                        background: transparent;
+                        color: #8E8E8E;
+                        height: 72px;
+                        display: block;
+                        margin: auto;
+                        width: 514px;
+                        font-size: 24px;
+                    }
+
+                    button:focus {
+                        outline: none;
+                    }
+
+                    button:hover {
+                        cursor: pointer;
+                    }
+
+                    button:disabled:hover {
+                        cursor: default;
+                    }
+
+                    .curation-title {
+                        font-size: 24px;
+                        text-align: center;
+                        margin-top: 60px;
+                        margin-bottom: 48px;
+                        font-weight: bold;
+                        color: #111111;
+                    }
+
+                    .curation-choice-div {
+                        height: auto;
+                        max-width: 800px;
+                        padding-bottom:60px;
+                        margin: 0 auto;
+                        clear:both;
+                        overflow:hidden;
+                    }
+
+                    .curation-choice-2-item,
+                    .curation-choice-6-item {
+                        height: 54px;
+                        width: 150px;
+                        border-radius: 10px;
+                        border: 1px solid #cccccc;
+                        margin-bottom:10px;
+                        margin: auto;
+                        color: #333333;
+                    }
+
+                    .curation-choice-2-item:hover,
+                    .curation-choice-6-item:hover {
+                        cursor: pointer;
+                    }
+
+                    .curation-choice-2-item p {
+                        margin: 0;
+                        text-align: center;
+                        line-height: 54px;
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+
+                    .curation-choice-6-item p {
+                        margin: 0;
+                        text-align: center;
+                        line-height: 150px;
+                        font-size: 22px;
+                        font-weight: bold;
+                    }
+
+                    .curation-choice-2-desc,
+                    .curation-choice-6-desc {
+                        text-align: center;
+                        font-size: 16px;
+                        color: black;
+                        margin: auto;
+                        margin-top: 12px;
+                        width: 80%;
+                        display: block;
+                        word-break: keep-all;
+                        line-height: 1.5;
+                    }
+
+                    #curation-choice-div-3 p {
+                        text-align: center;
+                    }
+
+                    .curation-choice-3-item {
+                        position: relative;
+                        height: 54px;
+                        width: 80%;
+                        border: 1px solid #ccc;
+                        margin: auto;
+                    }
+                    .curation-choice-3-item.active { color:#fff; background:#000; }
+
+                    .curation-choice-3-item:hover {
+                        cursor: pointer;
+                    }
+
+                    .curation-choice-3-item p {
+                        position: absolute;
+                        top: 0;
+                        width: 100%;
+                        text-align: center;
+                        margin: 0 auto;
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+
+                    .curation-choice-4-item {
+                        width: 400px;
+                        height: 160px;
+                        margin: 24px auto;
+                        border: 1px solid #cccccc;
+                        border-radius: 20px;
+                        color: black;
+                        background: transparent;
+                        display: block;
+                        clear: both;
+                    }
+
+                    .curation-choice-4-item:hover {
+                        cursor: pointer;
+                    }
+
+                    .curation-choice-4-item p {
+                        margin: auto;
+                        text-align: center;
+                        word-break: keep-all;
+                    }
+
+                    .curation-4-item-title {
+                        margin-bottom: 0px !important;
+                        font-size: 18px;
+                        font-weight: bold;
+                        margin-top: 40px !important;
+                    }
+
+                    .curation-4-item-desc {
+                        width: 165px;
+                        min-width: 150px;
+                        font-size: 16px;
+                        line-height: 1.5;
+                    }
+
+                    #curation-choice-div-5 {
+                        width: 860px;
+                        height: 800px;
+                    }
+
+                    .curation-choice-5-item {
+                        position: relative;
+                        height: 150px;
+                        width: 150px;
+                        border-radius: 100%;
+                        border: 1px solid transparent;
+                        margin: auto;
+                    }
+
+                    .curation-choice-5-item:hover {
+                        cursor: pointer;
+                    }
+
+                    .curation-choice-5-item img {
+                        height: 150px;
+                        width: 150px;
+                        border-radius: 100%;
+                        border: 1px solid transparent;
+                        margin: auto;
+                        object-fit: cover;
+                    }
+
+                    .curation-choice-5-item p {
+                        position: absolute;
+                        color: white;
+                        top: 0;
+                        text-align: center;
+                        width: 100%;
+                        line-height: 150px;
+                        margin: 0;
+                        display: none;
+
+                    }
+
+                    .curation-5-opacity {
+                        display: none;
+                        background: rgb(0, 0, 0, 0.5);
+                        height: 150px;
+                        width: 150px;
+                        border-radius: 100%;
+                        position: absolute;
+                        top: 0;
+                    }
+
+                    #redo-icon:hover,
+                    #redo-text:hover {
+                        cursor: pointer;
+                    }
+
+                    #redo-icon {
+                        width: 34px;
+                        height: 30px;
+                        margin: auto;
+                        display: block;
+                    }
+
+                    #redo-text {
+                        text-align: center;
+                        margin: 0;
+                        font-size: 14px;
+                    }
+
+                    #curation-result-div {
+                        background: black;
+                        width: 100%;
+                        min-height: 70vh;
+                        color: white;
+                        padding: 18px 0 170px 0;
+                    }
+
+                    #curation-result-product-div {
+                        width: 1000px;
+                        height: 600px;
+                        margin: auto;
+                    }
+
+                    .curation-product-div {
+                        float: left;
+                        width: 300px;
+                        margin: 15px;
+                        position: relative;
+                    }
+
+                    .curation-product {
+                        height: 460px;
+                        width: 300px;
+                        border: 1px solid white;
+                        background: white;
+                        position: relative;
+                    }
+
+                    .curation-product-number {
+                        position: absolute;
+
+                    }
+
+                    .product-image {
+                        width: 100%;
+                        margin-bottom: 10px;
+                    }
+
+                    .product-origin {
+                        color: #FF500A;
+                        font-size: 18px;
+                        letter-spacing: -0.9px !important;
+                        margin-left: 12px;
+                        margin-right: 12px;
+                        word-break: keep-all;
+                    }
+
+                    .product-desc {
+                        color: black;
+                        font-size: 16px;
+                        letter-spacing: -0.8px !important;
+                        margin-left: 12px;
+                        margin-right: 12px;
+                        word-break: keep-all;
+                    }
+
+                    #subscribe-button {
+                        color: white;
+                        background: #FF500A;
+                        width: 600px;
+                        height: 72px;
+                        border-radius: 0px;
+                        border: 1px solid #FF500A;
+                        margin: auto;
+                        display: block;
+                        font-size: 20px;
+                        margin-bottom: 80px;
+                    }
+
+                    #once-button {
+                        color: black;
+                        background: white;
+                        width: 600px;
+                        height: 72px;
+                        border-radius: 0px;
+                        border: 1px solid white;
+                        margin: auto;
+                        display: block;
+                        font-size: 20px;
+                        margin-bottom: 24px;
+                    }
+
+                    .divider {
+                        height: 1px;
+                        width: 100%;
+                        background: #cccccc;
+                    }
+
+                    #reset:hover {
+                        cursor: pointer;
+                    }
+
+                    .product-number {
+                        position: absolute;
+                        top: -48px;
+                        margin-bottom: 12px;
+                        left: 45%;
+                        width: 34px;
+                        height: 34px;
+                        border: 1px solid white;
+                        border-radius: 100%;
+                        text-align: center;
+                        line-height: 34px;
+                        font-size: 20px;
+                        font-family: 'Roboto', sans-serif !important;
+                        font-weight: bold;
+                    }
+                </style>
+
+                <div id="curation-div">
+
+                    <div id="progress-bar">
+                        <p id="progress-status">1/5</p>
+                        <div id="progress" style="width: 20%;"></div>
+                    </div>
+
+                    <div class="curation-step" id="curation-step-2">
+                        <p class="curation-title">다이어트를 해 본 경험이 있습니까?</p>
+                        <div id="curation-choice-div-2" class="curation-choice-div">
+                            <div>
+                                <div class="curation-choice-2-item" id="curation-2-item-네" onclick="step_2_select('네','yes','true');">
+                                    <p>네</p>
+                                </div>
+                                <div class="curation-choice-2-item" id="curation-2-item-아니오" onclick="step_2_select('아니오','no','false');">
+                                    <p>아니오</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="curation-step" id="curation-step-3">
+                        <p class="curation-title">다이어트를 결심하게 된 특별한 이유나 이벤트가 있으신가요?</p>
+                        <div id="curation-choice-div-3" class="curation-choice-div">
+                            <div>
+                                <div class="curation-choice-3-item" id="curation-3-item-자신감" onclick="step_3_select('자신감');">
+                                    <p>자신감을 회복하고 싶어요</p>
+                                </div>
+                                <div class="curation-choice-3-item" id="curation-3-item-스트레스" onclick="step_3_select('스트레스');">
+                                    <p>스트레스를 안받고 싶어요</p>
+                                </div>
+                                <div class="curation-choice-3-item" id="curation-3-item-건강" onclick="step_3_select('건강');">
+                                    <p>조금 더 건강해지고 싶어요</p>
+                                </div>
+                                <div class="curation-choice-3-item" id="curation-3-item-행사" onclick="step_3_select('행사');">
+                                    <p>중요한 행사가 있어요 (결혼, 데이트)</p>
+                                </div>
+                                <div class="curation-choice-3-item" id="curation-3-item-기타" onclick="step_3_select('기타');">
+                                    <p>기타</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+                    <div id="button-div">
+                        <button id="prev-button" disabled="" onclick="prev_step()">이전</button>
+                        <button id="next-button" disabled="true" onclick="next_step()">다음</button>
+                    </div>
+                </div>
+
+                <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+                <script>
+
+                    var user = {};
+                    //var is_subscribe = regular_delivery_count;
+                    var base_url = 'http://dahyeportfolio.dothome.co.kr/cellpharm.html';
+                    // var base_url = 'http://127.0.0.1:8000';
+
+
+                    var step = 1;
+
+
+                    var values = {
+                        caffeine: undefined,
+                        caffeine_english: undefined,
+                        intensity: undefined,
+                        tool: undefined,
+                        grind: undefined,
+                        favorites: []
+                    };
+
+                    var hid = localStorage.getItem('hid');
+                    // $('.curation-step').hide();
+
+                    if (hid !== null && hid !== undefined) {
+                        step = 9;
+                        change_step();
+                    } else {
+                        // $('.curation-step').hide();
+                        next_step();
+                    }
+
+                    function change_step() {
+                        var step_id = '#curation-step-' + step.toString();
+                        $('.curation-step').hide();
+                        $(step_id).show();
+                        $('#progress-status').text((step - 1).toString() + '/5');
+                        $('#progress').css('width', ((step - 1) * 20).toString() + '%');
+
+                        console.log(step_id);
+
+                        // switch (step) {
+                        //     // 다이어트 여부
+                        //     case 2:
+                        //         $('#next-button').css("border", "1px black");
+                        //         $('#next-button').css("background", "black");
+                        //         $('#next-button').css("color", "white");
+                        //         $('#next-button').text("다음");
+                        //         get_step_2();
+                        //         break;
+
+                        //     // 기구
+                        //     case 3:
+                        //         $('#next-button').css("border", "1px black");
+                        //         $('#next-button').css("background", "black");
+                        //         $('#next-button').css("color", "white");
+                        //         $('#next-button').text("다음");
+                        //         get_step_3();
+                        //         break;
+
+                        //     // 배전도
+                        //     case 4:
+                        //         $('#next-button').css("border", "1px black");
+                        //         $('#next-button').css("background", "black");
+                        //         $('#next-button').css("color", "white");
+                        //         $('#next-button').text("다음");
+                        //         get_step_4();
+                        //         break;
+
+                        // }
+                    }
+
+                    function next_step() {
+                        var next_step = step + 1;
+                        console.log(step, next_step);
+                        switch (next_step) {
+                            case 2:
+                                $('#next-button').show();
+                                $('#next-button').css('width', '100%');
+                                $('#prev-button').hide();
+                                $('#progress-bar').show();
+                                break;
+
+                            // 다이어트 여부 선택
+                            case 3:
+                                $.post(base_url + '/recommend/caffeine', { caffeine: values.caffeine, user: user }, function (res) {
+                                    if (values.caffeine == '아니오') {
+                                        // hid = res.history.id;
+                                        // localStorage.setItem('hid', hid);
+                                        step = 6;
+                                        change_step();
+                                    } else {
+                                        $('#prev-button').show();
+                                        $('#next-button').css('width', '200px');
+                                        $('#prev-button').attr('disabled', false);
+                                        step = next_step;
+                                        change_step();
+                                    }
+                                });
+                                return;
+
+                            // 기구 선택, 배전도로
+                            case 4:
+                                $.post(base_url + '/recommend/tools', { caffeine: values.caffeine, tool: values.tool, user: user }, function (res) {
+                                    $('#prev-button').show();
+                                    $('#prev-button').attr('disabled', false);
+                                });
+
+                                break;
+
+                            // 배전도 선택, 맛으로
+                            case 5:
+                                $.post(base_url + '/recommend/intensity', { caffeine: values.caffeine, tool: values.tool, intensity: values.intensity, user: user }, function (res) {
+                                    console.log('');
+                                });
+                                $('#prev-button').show();
+                                $('#next-button').css('width', '200px');
+                                $('#prev-button').attr('disabled', false);
+                                $('#next-button').show();
+                                break;
+
+                            // 맛 선택, 원두 -> 분쇄옵션, 드립백 -> 다음단계
+                            case 6:
+                                if (values.is_drip_available) {
+                                    // 드립 가능, 분쇄옵션
+                                    $('#prev-button').show();
+                                    $('#next-button').css('width', '200px');
+                                    $('#prev-button').attr('disabled', false);
+                                } else {
+                                    // 드립백, 분쇄패스
+                                    next_step++;
+                                }
+                                break;
+
+                            // 맛 선택, 결과로
+                            case 7:
+                                $('#prev-button').hide();
+                                $('#next-button').hide();
+                                break;
+
+                            case 8:
+                                break;
+
+                            default:
+                                return;
+                        }
+
+                        step = next_step;
+                        change_step();
+                    }
+
+                    function prev_step() {
+                        var prev_step = step - 1;
+                        if (prev_step == 2) {
+                            $('#prev-button').hide();
+                            $('#next-button').css('width', '100%');
+                            $('#next-button').show();
+
+                        } else if (prev_step < 2) {
+                            $('#prev-button').hide();
+                            $('#next-button').css('width', '100%');
+                            $('#next-button').show();
+                            return;
+                        }
+                        step = prev_step;
+                        $('#next-button').show();
+                        change_step();
+                    }
+
+                    // function get_step_2() {
+                    //     $.get(base_url + '/recommend/caffeine', '', function (res) {
+                    //         $('#curation-choice-div-2').empty();
+                    //         $('#next-button').attr('disabled', true);
+                    //         res.forEach(function (el, index) {
+                    //             $('#curation-choice-div-2').append("<div style=\"height:300px; width: 324px; float: left;\"><div class=\"curation-choice-2-item\" id=\"curation-2-item-" + el.name + "\"onclick=\"step_2_select('" + el.name + "','" + el.english + "','" + el.is_caffeine + "');\"><p>" + el.name + "</p></div><p class=\"curation-choice-2-desc regular\">" + el.desc + "</p></div>");
+                    //         });
+                    //         $('#curation-choice-div-2').css('max-width', (res.length * 324).toString() + 'px');
+                    //         if (values.caffeine !== undefined) {
+                    //             step_2_select(values.caffeine, values.caffeine_english);
+                    //         }
+                    //     }, 'json');
+                    // }
+
+                    function step_2_select(value, english, is_caffeine) {
+                        $('#curation-2-item-' + values.caffeine + ' p').text(values.caffeine);
+
+
+                        values.caffeine = value;
+                        values.is_caffeine = is_caffeine;
+                        values.caffeine_english = english;
+
+                        $('.curation-choice-2-item').css('background', 'white');
+                        $('.curation-choice-2-item').css('color', '#333333');
+                        $('.curation-choice-2-item p').removeClass('roboto');
+
+                        $('#curation-2-item-' + value + ' p').addClass('roboto');
+                        $('#curation-2-item-' + value + ' p').text(english);
+                        $('#curation-2-item-' + value).css('background', 'black');
+                        $('#curation-2-item-' + value).css('color', 'white');
+
+                        if (values.caffeine) {
+                            $('#next-button').attr('disabled', false);
+                        }
+                    }
+
+                    function step_3_select(value) {
+                        values.tool = value;
+                        //$('#next-button').attr('disabled', true);
+                        $('#curation-3-item-' + value).toggleClass('active')
+
+                        if (values.tool) {
+                            $('#next-button').attr('disabled', false);
+                        }
+                    }
+
+                    function step_4_select(value) {
+                        values.intensity = value;
+
+                        $('#curation-4-item-' + values.intensity.replaceAll(' ', '')).css('background', 'black');
+                        $('#curation-4-item-' + values.intensity.replaceAll(' ', '')).css('color', 'white');
+
+                        values.intensity = value;
+
+                        $('.curation-choice-4-item').css('background', 'white');
+                        $('.curation-choice-4-item').css('color', 'black');
+
+                        $('#curation-4-item-' + value.replaceAll(' ', '')).css('background', 'black');
+                        $('#curation-4-item-' + value.replaceAll(' ', '')).css('color', 'white');
+
+                        if (values.intensity) {
+                            $('#next-button').attr('disabled', false);
+                        }
+                    }
+
+                    function step_5_select(value) {
+
+                        if (values.favorites.indexOf(value) > -1) {
+                            values.favorites.splice(values.favorites.indexOf(value), 1);
+                            $('#curation-5-item-' + value.replaceAll(' ', '').replaceAll('/', '') + ' .curation-5-opacity').hide();
+
+                        } else {
+                            values.favorites.push(value);
+                            $('#curation-5-item-' + value.replaceAll(' ', '').replaceAll('/', '') + ' .curation-5-opacity').show();
+                        }
+
+                        if (values.favorites.length >= 3) {
+                            $('#next-button').attr('disabled', false);
+                        } else {
+                            $('#next-button').attr('disabled', true);
+                        }
+                    }
+
+                    function step_6_select(value, english, is_grind) {
+                        $('#curation-6-item-' + values.grind + ' p').text(values.grind);
+
+
+                        values.grind = value;
+                        values.is_grind = is_grind;
+                        values.grind_english = english;
+
+                        $('.curation-choice-6-item').css('background', 'white');
+                        $('.curation-choice-6-item').css('color', '#333333');
+                        $('.curation-choice-6-item p').removeClass('roboto');
+
+                        $('#curation-6-item-' + value + ' p').addClass('roboto');
+                        $('#curation-6-item-' + value + ' p').text(english);
+                        $('#curation-6-item-' + value).css('background', 'black');
+                        $('#curation-6-item-' + value).css('color', 'white');
+
+                        if (values.grind) {
+                            $('#next-button').attr('disabled', false);
+                        }
+                    }
+
+                    function get_step_7() {
+                        setTimeout(function () {
+                            next_step();
+                        }, 2000);
+
+                    }
+
+                    function get_step_8() {
+
+                        setTimeout(function () {
+
+
+                            $.post(base_url + '/recommend/curation', { caffeine: values.caffeine, tool: values.tool, intensity: values.intensity, hates: [], favorites: values.favorites, is_grind: values.is_grind, user: user }, function (res) {
+                                console.log(res);
+                                $('#curation-result-product-div').empty();
+                                $('#next-button').attr('disabled', true);
+
+                                console.log(res);
+                                console.log('count', window.regular_delivery_count);
+
+                                if (res.history.caffeine.is_caffeine === false) {
+                                    $('#hint-text span').text('이 달의 디카페인 원두');
+                                    $('#once-button').attr('onclick', "location.href = '/product/카페박스/12?type=once&product=decaffeine';");
+                                    $('#once-button a').attr('href', "/product/카페박스/12?type=once&product=decaffeine");
+
+                                    if (window.regular_delivery_count > 0) {
+                                        $('#subscribe-button').hide();
+                                        $('#price-text').hide();
+                                        $('#subscribe-description').text('카페박스 구독자님들께는 매달 넷째주 수요일 카페박스가 발송됩니다!');
+                                        $('#description-normal').hide();
+                                    } else {
+                                        $('#price-text span').text('100g 원두 3종 = 19,900원');
+                                        $('#subscribe-button').attr('onclick', "location.href = '/product/카페박스/12?type=subscibe&product=decaffeine';");
+                                        $('#subscribe-button a').attr('href', "/product/카페박스/12?type=subscribe&product=decaffeine");
+                                    }
+                                }
+                                else if (res.history.tool.is_drip_available === false) {
+                                    $('#hint-text span').text('이 달의 드립백');
+                                    $('#once-button').attr('onclick', "location.href = '/product/카페박스/12?type=once&product=dripbag';");
+                                    $('#once-button a').attr('href', "/product/카페박스/12?type=once&product=dripbag");
+
+                                    if (window.regular_delivery_count > 0) {
+                                        $('#subscribe-button').hide();
+                                        $('#price-text').hide();
+                                        $('#subscribe-description').text('카페박스 구독자님들께는 매달 넷째주 수요일 카페박스가 발송됩니다!');
+                                        $('#description-normal').hide();
+                                    } else {
+                                        $('#price-text span').text('드립백 2종 각 8개씩 (총 16개입) = 19,900원');
+                                        $('#subscribe-button').attr('onclick', "location.href = '/product/카페박스/12?type=subscibe&product=dripbag';");
+                                        $('#subscribe-button a').attr('href', "/product/카페박스/12?type=subscribe&product=dripbag");
+                                    }
+                                }
+                                else {
+                                    $('#hint-text span').text('이 달의 원두');
+                                    $('#once-button').attr('onclick', "location.href = '/product/카페박스/12?type=once&product=bean';");
+                                    $('#once-button a').attr('href', "/product/카페박스/12?type=once&product=bean");
+
+                                    if (window.regular_delivery_count > 0) {
+                                        $('#subscribe-button').hide();
+                                        $('#price-text').hide();
+                                        $('#subscribe-description').text('카페박스 구독자님들께는 매달 넷째주 수요일 카페박스가 발송됩니다!');
+                                        $('#description-normal').hide();
+                                    } else {
+                                        $('#price-text span').text('100g 원두 3종 = 19,900원');
+                                        $('#subscribe-button').attr('onclick', "location.href = '/product/카페박스/12?type=subscibe&product=bean';");
+                                        $('#subscribe-button a').attr('href', "/product/카페박스/12?type=subscribe&product=bean");
+                                    }
+                                }
+
+                                localStorage.setItem('hid', res.history.id);
+                                res.recommend.forEach(function (el, index) {
+                                    console.log(el);
+                                    $('#curation-result-product-div').append("<div class=\"curation-product-div\"><p class=\"product-number\">" + (index + 1).toString() + "</p><div class=\"curation-product\" id=\"curation-product-" + el.brand.replaceAll(' ', '') + "\"><img class=\"product-image\" /><p class=\"product-origin\">(" + el.origin + ")</p><p class=\"product-desc regular\">" + el.desc + "</p></div></div>");
+                                    $("#curation-product-" + el.brand.replaceAll(' ', '') + " img").attr('src', el.image);
+                                });
+                            }, 'json');
+                        }, 2500);
+
+                        // $('#once-button').attr('onclick', "location.href = '/product/카페박스/12?type=once&product=bean';");
+                        // $('#once-button a').attr('href', "/product/카페박스/12?type=once&product=bean");
+                    }
+
+                    function get_step_8_by_history() {
+                        if (user.id === undefined) {
+                            user.id = null
+                        }
+
+                        // var historyid = localStorage.getItem('hid');
+
+                        setTimeout(function () {
+                            $.get(base_url + '/recommend/users', { uid: user.id, hid: hid }, function (res) {
+                                $('#curation-result-product-div').empty();
+                                $('#next-button').attr('disabled', true);
+
+                                localStorage.setItem('hid', res.history.id);
+
+                                if (res.history.caffeine.is_caffeine === false) {
+                                    $('#hint-text span').text('이 달의 디카페인 원두');
+                                    $('#once-button').attr('onclick', "location.href = '/product/카페박스/12?type=once&product=decaffeine';");
+                                    $('#once-button a').attr('href', "/product/카페박스/12?type=once&product=decaffeine");
+
+                                    if (window.regular_delivery_count > 0) {
+                                        $('#subscribe-button').hide();
+                                        $('#price-text').hide();
+                                        $('#subscribe-description').text('카페박스 구독자님들께는 매달 넷째주 수요일 카페박스가 발송됩니다!');
+                                        $('#description-normal').hide();
+                                    } else {
+                                        $('#price-text span').text('100g 원두 3종 = 19,900원');
+                                        $('#subscribe-button').attr('onclick', "location.href = '/product/카페박스/12?type=subscibe&product=decaffeine';");
+                                        $('#subscribe-button a').attr('href', "/product/카페박스/12?type=subscribe&product=decaffeine");
+                                    }
+                                }
+                                else if (res.history.tool.is_drip_available === false) {
+                                    $('#hint-text span').text('이 달의 드립백');
+                                    $('#once-button').attr('onclick', "location.href = '/product/카페박스/12?type=once&product=dripbag';");
+                                    $('#once-button a').attr('href', "/product/카페박스/12?type=once&product=dripbag");
+
+                                    if (window.regular_delivery_count > 0) {
+                                        $('#subscribe-button').hide();
+                                        $('#price-text').hide();
+                                        $('#subscribe-description').text('카페박스 구독자님들께는 매달 넷째주 수요일 카페박스가 발송됩니다!');
+                                        $('#description-normal').hide();
+                                    } else {
+                                        $('#price-text span').text('드립백 2종 각 8개씩 (총 16개입) = 19,900원');
+                                        $('#subscribe-button').attr('onclick', "location.href = '/product/카페박스/12?type=subscibe&product=dripbag';");
+                                        $('#subscribe-button a').attr('href', "/product/카페박스/12?type=subscribe&product=dripbag");
+                                    }
+                                }
+                                else {
+                                    $('#hint-text span').text('이 달의 원두');
+                                    $('#once-button').attr('onclick', "location.href = '/product/카페박스/12?type=once&product=bean';");
+                                    $('#once-button a').attr('href', "/product/카페박스/12?type=once&product=bean");
+
+                                    if (window.regular_delivery_count > 0) {
+                                        $('#subscribe-button').hide();
+                                        $('#price-text').hide();
+                                        $('#subscribe-description').text('카페박스 구독자님들께는 매달 넷째주 수요일 카페박스가 발송됩니다!');
+                                        $('#description-normal').hide();
+                                    } else {
+                                        $('#price-text span').text('100g 원두 3종 = 19,900원');
+                                        $('#subscribe-button').attr('onclick', "location.href = '/product/카페박스/12?type=subscibe&product=bean';");
+                                        $('#subscribe-button a').attr('href', "/product/카페박스/12?type=subscribe&product=bean");
+                                    }
+                                }
+
+                                res.product_list.forEach(function (el, index) {
+                                    $('#curation-result-product-div').append("<div class=\"curation-product-div\"><p class=\"product-number\">" + (index + 1).toString() + "</p><div class=\"curation-product\" id=\"curation-product-" + el.brand.replaceAll(' ', '') + "\"><img class=\"product-image\" /><p class=\"product-origin\">(" + el.origin + ")</p><p class=\"product-desc regular\">" + el.desc + "</p></div></div>");
+                                    $("#curation-product-" + el.brand.replaceAll(' ', '') + " img").attr('src', el.image);
+                                });
+
+                                $('#curation-step-8').show();
+                            }, 'json');
+                        }, 2500);
+
+                    }
+
+                    function redo() {
+                        var con_test = confirm("큐레이션 기록을 지우고 큐레이션을 다시 진행합니다.");
+                        if (con_test == true) {
+                            if (user.id) {
+                                var historyid = localStorage.getItem('hid');
+                                $.post(base_url + '/recommend/users/reset', { hid: historyid, uid: user.id }, function (res) {
+                                    localStorage.removeItem('hid');
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                localStorage.removeItem('hid');
+                                location.reload();
+                            }
+                        }
+                    }
+
+                    function reset() {
+                        var con_test = confirm("큐레이션 기록이 지워지고 카페박스팀 추천 상품들로 구성됩니다.");
+                        if (con_test == true) {
+                            if (user.id) {
+                                var historyid = localStorage.getItem('hid');
+                                $.post(base_url + '/recommend/users/reset', { hid: historyid, uid: user.id }, function (res) {
+                                    localStorage.removeItem('hid');
+                                    location.href = '/product/카페박스/12';
+                                });
+                            }
+                            else {
+                                localStorage.removeItem('hid');
+                                location.href = '/product/카페박스/12';
+                            }
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
